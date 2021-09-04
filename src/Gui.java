@@ -10,7 +10,7 @@ public class Gui extends JFrame{
     private JLabel[] nLabels;
     private JLabel weight;
     private JTextField[] nInputs;
-    private JButton add, set, confirm;
+    private JButton add, set, confirm, clear;
     public Gui () {
         initGui();
     }
@@ -22,9 +22,10 @@ public class Gui extends JFrame{
         initFields();
         setLayout();
 
-        setPreferredSize(new Dimension(500, 650));
+        setPreferredSize(new Dimension(500, 670));
         setTitle("Meal Planner");
         this.pack();
+        this.setLocationRelativeTo(null);
         this.setResizable(false); // set to false so that the user cannot change the size
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -74,6 +75,9 @@ public class Gui extends JFrame{
 
         confirm = new JButton("CONFIRM");
         confirm.setPreferredSize(new Dimension(100, 20));
+
+        clear = new JButton("CLEAR");
+        clear.setPreferredSize(new Dimension(100, 20));
     }
 
     /**
@@ -115,6 +119,9 @@ public class Gui extends JFrame{
         //Position the CONFIRM button
         spring.putConstraint(SpringLayout.NORTH, confirm, 120, SpringLayout.NORTH, root);
         spring.putConstraint(SpringLayout.WEST, confirm, 200, SpringLayout.WEST, root);
+        //Position the CLEAR button
+        spring.putConstraint(SpringLayout.NORTH, clear, 600, SpringLayout.NORTH, root);
+        spring.putConstraint(SpringLayout.WEST, clear, 200, SpringLayout.WEST, root);
 
         spring.putConstraint(SpringLayout.NORTH, textPanel, 270, SpringLayout.NORTH, root);
         spring.putConstraint(SpringLayout.WEST, textPanel, 15, SpringLayout.WEST, root);
@@ -126,6 +133,7 @@ public class Gui extends JFrame{
         root.add(set);
         root.add(add);
         root.add(confirm);
+        root.add(clear);
         root.add(textPanel);
         add(root);
     }
@@ -144,6 +152,10 @@ public class Gui extends JFrame{
     }
     public JButton getConfirm() {
         return confirm;
+    }
+
+    public JButton getClear() {
+        return clear; 
     }
     // public static void main(String[] args) {
     //     Gui test = new Gui();

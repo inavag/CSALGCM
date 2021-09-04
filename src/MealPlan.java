@@ -30,6 +30,7 @@ public class MealPlan {
         JButton confirm = gui.getConfirm();
         JButton add = gui.getAdd();
         JButton set = gui.getSet();
+        JButton clear = gui.getClear();
 
         
         set.addActionListener(e -> {
@@ -48,6 +49,10 @@ public class MealPlan {
         confirm.addActionListener(e -> {
             GreedyAlgo(log);
         });
+
+        clear.addActionListener(e -> {
+            clear();
+        });
         
     }
     /**
@@ -58,6 +63,15 @@ public class MealPlan {
         items.add(item);
         log.append(text);
         clearField();
+    }
+
+    /**
+     * Clears arraylist and text area 
+     */
+
+    private void clear() {
+        items.clear(); 
+        gui.getTextArea().setText("");
     }
 
     /**
@@ -128,16 +142,21 @@ public class MealPlan {
         return gui.getTextArea();
     }
     public static void main(String[] args) {
-        MealPlan app = new MealPlan();
-        FoodItem one = new FoodItem("Chicken", 100, 250);
-        FoodItem two = new FoodItem("Pork", 250, 300);
-        FoodItem three = new FoodItem("Pasta", 50, 125);
-        FoodItem four = new FoodItem("Apple", 25, 100);
+        
+        new MealPlan();
 
-        app.addItem(one, app.getTextArea());
-        app.addItem(two, app.getTextArea());
-        app.addItem(three, app.getTextArea());
-        app.addItem(four, app.getTextArea());
+        //remove comment to test clear button 
+        //bring back comment after testing clear button
+        // MealPlan app = new MealPlan();
+        // FoodItem one = new FoodItem("Chicken", 100, 250);
+        // FoodItem two = new FoodItem("Pork", 250, 300);
+        // FoodItem three = new FoodItem("Pasta", 50, 125);
+        // FoodItem four = new FoodItem("Apple", 25, 100);
+
+        // app.addItem(one, app.getTextArea());
+        // app.addItem(two, app.getTextArea());
+        // app.addItem(three, app.getTextArea());
+        // app.addItem(four, app.getTextArea());
     }
 
 }
