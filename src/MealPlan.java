@@ -36,6 +36,7 @@ public class MealPlan {
         set.addActionListener(e -> {
             W = Integer.parseInt(weight.getText());
             log.append("Target Calories: " + W +" set!\n");
+            gui.getInput(0).setText("");
         });
 
         add.addActionListener(e -> {
