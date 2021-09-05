@@ -6,11 +6,12 @@ public class Gui extends JFrame{
     private SpringLayout spring;
     private JTextArea log;
     private JScrollPane scroll;
-    private JPanel root, textPanel;
+    private JPanel root, textPanel, algoPanel;
     private JLabel[] nLabels;
     private JLabel weight;
     private JTextField[] nInputs;
     private JButton add, set, confirm, clear;
+    private JRadioButton greedy, dynamic;
     public Gui () {
         initGui();
     }
@@ -20,6 +21,7 @@ public class Gui extends JFrame{
     private void initGui() {
         initTextArea();
         initFields();
+        initChoice();
         setLayout();
 
         setPreferredSize(new Dimension(500, 670));
@@ -79,7 +81,14 @@ public class Gui extends JFrame{
         clear = new JButton("CLEAR");
         clear.setPreferredSize(new Dimension(100, 20));
     }
-
+    private void initChoice() {
+        greedy = new JRadioButton("Greedy Algorithm");
+        dynamic = new JRadioButton("Dynamic Programming");
+        ButtonGroup radioGrp = new ButtonGroup();
+        greedy.setSelected(true);
+        radioGrp.add(greedy);
+        radioGrp.add(dynamic);
+    }
     /**
      * This function sets the position of the elements in 
      * the GUI frame
@@ -116,8 +125,13 @@ public class Gui extends JFrame{
         //Position the ADD button
         spring.putConstraint(SpringLayout.NORTH, add, 60, SpringLayout.NORTH, root);
         spring.putConstraint(SpringLayout.WEST, add, 400, SpringLayout.WEST, root);
+        //Position Radio Buttons
+        spring.putConstraint(SpringLayout.NORTH, greedy, 115, SpringLayout.NORTH, root);
+        spring.putConstraint(SpringLayout.WEST, greedy, 175, SpringLayout.WEST, root);
+        spring.putConstraint(SpringLayout.NORTH, dynamic, 135, SpringLayout.NORTH, root);
+        spring.putConstraint(SpringLayout.WEST, dynamic, 175, SpringLayout.WEST, root);
         //Position the CONFIRM button
-        spring.putConstraint(SpringLayout.NORTH, confirm, 120, SpringLayout.NORTH, root);
+        spring.putConstraint(SpringLayout.NORTH, confirm, 175, SpringLayout.NORTH, root);
         spring.putConstraint(SpringLayout.WEST, confirm, 200, SpringLayout.WEST, root);
         //Position the CLEAR button
         spring.putConstraint(SpringLayout.NORTH, clear, 600, SpringLayout.NORTH, root);
@@ -132,6 +146,8 @@ public class Gui extends JFrame{
         }
         root.add(set);
         root.add(add);
+        root.add(greedy);
+        root.add(dynamic);
         root.add(confirm);
         root.add(clear);
         root.add(textPanel);
@@ -153,9 +169,14 @@ public class Gui extends JFrame{
     public JButton getConfirm() {
         return confirm;
     }
-
     public JButton getClear() {
         return clear; 
+    }
+    public JRadioButton getGreedy() {
+        return greedy;
+    }
+    public JRadioButton getDynamic() {
+        return dynamic;
     }
     // public static void main(String[] args) {
     //     Gui test = new Gui();
