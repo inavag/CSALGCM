@@ -1,6 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Stand-alone application that calculates the recommended amount of grams, together with its associated calories, that a certain food portion should only have 
+ * to limit the number of calories of a certain meal. This will then help in achieving the target calories set by the user for a planned meal. 
+ * 
+ * This class is responsible for GUI of this application. 
+ */
+
 public class Gui extends JFrame{
     private SpringLayout spring;
     private JTextArea log;
