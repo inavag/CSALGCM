@@ -1,17 +1,17 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Scanner;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class MealPlan {
     private Gui gui;
     private ArrayList<FoodItem> items;
-    private int W; //Calories
+    private int W; //Target Calories
+
     public MealPlan() {
         items = new ArrayList<>();
         this.W = 0;
@@ -32,21 +32,34 @@ public class MealPlan {
         JButton set = gui.getSet();
         JButton clear = gui.getClear();
 
-        
+        //The weight is set once the SET button is pressed
         set.addActionListener(e -> {
-            W = Integer.parseInt(weight.getText());
-            log.append("Target Calories: " + W +" set!\n");
-            gui.getInput(0).setText("");
+            //Displays an error prompt if the input for the Weight is invalid
+            try {
+                W = Integer.parseInt(weight.getText());
+                log.append("Target Calories: " + W +" set!\n");
+                gui.getInput(0).setText("");
+            } catch (NumberFormatException err) {
+                JOptionPane.showMessageDialog(null, "Invalid Input.", "Inane error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
+        //Adds the item into the list when the ADD button is pressed
         add.addActionListener(e -> {
             String foodName = foodInput.getText();
-            int grams = Integer.parseInt(gramsInput.getText());
-            int calories = Integer.parseInt(calInput.getText());
-            FoodItem item = new FoodItem(foodName, grams, calories);
-            addItem(item, log);
+            //Displays an error prompt if the input for the grams or calories is invalid
+            try {
+                int grams = Integer.parseInt(gramsInput.getText());
+                int calories = Integer.parseInt(calInput.getText());
+                FoodItem item = new FoodItem(foodName, grams, calories);
+                addItem(item, log);
+            } catch (NumberFormatException err) {
+                JOptionPane.showMessageDialog(null, "Invalid Input.", "Inane error", JOptionPane.ERROR_MESSAGE);
+            }
+
         });
 
+        //Performs the operation needed based on the chosen algorithm
         confirm.addActionListener(e -> {
             if (gui.getGreedy().isSelected()) {
                 GreedyAlgo(log);
@@ -55,6 +68,7 @@ public class MealPlan {
             }
         });
 
+        //Clears the textarea and the list
         clear.addActionListener(e -> {
             clear();
         });

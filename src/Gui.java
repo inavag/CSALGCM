@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.text.*;
 
 public class Gui extends JFrame{
     private SpringLayout spring;
@@ -224,7 +223,4 @@ public class Gui extends JFrame{
     public JRadioButton getDynamic() {
         return dynamic;
     }
-    // public static void main(String[] args) {
-    //     Gui test = new Gui();
-    // }
 }
