@@ -6,7 +6,7 @@ public class Gui extends JFrame{
     private SpringLayout spring;
     private JTextArea log;
     private JScrollPane scroll;
-    private JPanel root, textPanel, algoPanel;
+    private JPanel root, textPanel;
     private JLabel[] nLabels;
     private JLabel weight;
     private JTextField[] nInputs;
