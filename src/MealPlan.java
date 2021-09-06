@@ -195,7 +195,7 @@ public class MealPlan {
         int n = items.size();
         int[] v = new int[n];
         int[] w = new int[n];
-        int[][] cost = new int[n + 1][W+1]; //would contain the optimal values for the first i tems and weight limit of j 
+        int[][] cost = new int[n + 1][W+1]; //would contain the optimal values for the first i items and weight limit of j 
 
         int i = 0;
         //Initialize the v and w arrays
