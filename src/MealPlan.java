@@ -7,6 +7,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+  * Team 4 
+  * CRUZADA, CARLA JEANNINE ORTEGA 
+  * EVANGELISTA, INA PATRICIA DE LIMA 
+  * FRANCISCO, PIOLO JOSE TAN 
+  * LOYOLA, RAINIER MAGNO
+  * 
+  * Stand-alone application that calculates the recommended amount of grams, together with its associated calories, that a certain food portion should only have 
+  * to limit the number of calories of a certain meal. This will then help in achieving the target calories set by the user for a planned meal. 
+  * 
+  * The problem is reduced as a Knapsack Problem, and it was solved through dynamic programming and using a greedy algorithm.
+  * 
+  * Greedy Algorithm is based from what has been taught in class. 
+  * 
+  * Reference for the dynamic programming solution: https://www.codesdope.com/course/algorithms-knapsack-problem/
+  * The functions mentioned in the comments for the said algorithm are also from this reference. 
+  */
+
 public class MealPlan {
     private Gui gui;
     private ArrayList<FoodItem> items;
@@ -137,13 +155,14 @@ public class MealPlan {
             i++;
         }
         i = 0;
+        //whle the number of items and the maximum weight has not been reached
         while (i < n && weight < W) {     
-            if (weight + w[i] <= W) {
-                x[i] = 1;
+            if (weight + w[i] <= W) { // if adding the current weight of the item to the current total weight would not exceed the maximum weight
+                x[i] = 1; //include the whole item 
             } else {
-                x[i] = ((W - weight) /(float) w[i]);  
+                x[i] = ((W - weight) /(float) w[i]);  // get the fractional part of the item that would accomodate the maximum weight. 
             }
-            weight = weight + (x[i] * w[i]);
+            weight = weight + (x[i] * w[i]); //update total weight 
             i++;
         }
 
@@ -169,15 +188,14 @@ public class MealPlan {
     }
 
     /**
-     * This method utilizes the dynamic programming to solve the
-     * knapsack problem.
-     * @param log is the area where the text will be displayed in the GUI
-     */
+      * Solves the 0-1 knapsack problem using dynamic programming.
+      * @param log is the area where the text will be displayed in the GUI
+      */
     private void dynamicAlgo(JTextArea log) {
         int n = items.size();
         int[] v = new int[n];
         int[] w = new int[n];
-        int[][] cost = new int[n + 1][W+1];
+        int[][] cost = new int[n + 1][W+1]; //would contain the optimal values for the first i tems and weight limit of j 
 
         int i = 0;
         //Initialize the v and w arrays
@@ -195,24 +213,33 @@ public class MealPlan {
             cost[i][0] = 0;
         }
 
+         //iterate through the number of items  
         for (i = 1; i <= n; i++) {
+            //iterate through the weights 
             for (int k = 1; k <= W; k++) {
-                if(w[i-1] > k) {
-                    cost[i][k] = cost[i-1][k];
-                } else {
+                if(w[i-1] > k) { // if the current weight of the item is greater than k, we cannot add it to the knapsack 
+                    cost[i][k] = cost[i-1][k]; // only left with the i - 1 items and the weight limit W, leave the item
+                } else { // we can add the item to the knapsack
+                    
+                    /**
+                     * Making the decision to add or leave the item depends on whichever has the maximum value between the function F(i-1, W) and F(i-1, W-wi) + vi.
+                     * if the function F(i-1, W-wi) + vi is greater, the item will be picked, making the sum the optimal value of that item. 
+                     * Otherwise, the item will not be included. 
+                     * */
                     if (v[i-1]+cost[i-1][k-w[i-1]] > cost[i-1][k]) {
-                        cost[i][k] = v[i-1] + cost[i-1][k-w[i-1]];
+                        cost[i][k] = v[i-1] + cost[i-1][k-w[i-1]]; //pick the item 
                     } else {
-                        cost[i][k] = cost[i-1][k];
+                        cost[i][k] = cost[i-1][k]; // only left with the i - 1 items and the weight limit W, leave the item
                     }
                 }
             }
         }
-        dynamicItems(log, cost, n, w, v);
+        dynamicItems(log, cost, n, w, v); //finalize the output of the matrix cost 
     }
 
-    /**
-     * This method determines the items included in the result of the dynamic programming.
+   /**
+     * This method determines the items included in the result of the dynamic programming. It does not include the
+     * duplicate optimal value between two rows since the duplicate optimal value has no effect in the total optimized value. 
      * @param log is the area where the text will be displayed in the GUI.
      * @param cost the matrix where the different outputs are located.
      * @param n is the number of items in the list.
@@ -226,15 +253,15 @@ public class MealPlan {
         int totalGram = 0;
         log.append("\n\nDynamic Programming Output: \n\n");
         while (i > 0 && j > 0) {
-            if (cost[i][j] != cost[i-1][j]) {
+            if (cost[i][j] != cost[i-1][j]) {  //if the optimal values are not the same, print
                 FoodItem f = items.get(i-1);
                 String text = String.format("%s: %6.2f g | %6.2f calories\n", f.getFoodName(), (float)f.getGrams(), (float)f.getCalories());
                 totalCal += f.getCalories();
                 totalGram += f.getGrams();
                 log.append(text);
-                j = j-w[i-1];
+                j = j-w[i-1]; // reduce the weight limit 
             }
-            i = i-1;
+            i = i-1; //move one row upward
         }
         
         String total = String.format("\nTotal Grams: %5d g\n", totalGram);
@@ -242,9 +269,17 @@ public class MealPlan {
         total = String.format("Total Calories: %5d calories\n", totalCal);
         log.append(total);
     }
+     /**
+       * This function gets the text area used in the application from the Gui object. 
+       * @return the JTextArea element. 
+       */
     public JTextArea getTextArea() {
         return gui.getTextArea();
     }
+    
+    /**
+     * This is the main driver of the application. 
+     */
     public static void main(String[] args) {
 
         //remove comment to test clear button 
