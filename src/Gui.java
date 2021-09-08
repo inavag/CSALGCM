@@ -267,7 +267,7 @@ public class Gui extends JFrame{
      */
     public JRadioButton getGreedy() {
         return greedy;
-    }
+    } 
      /**
      * This function gets the radio button for the 'dynamic' approach 
      * @return the JRadioButton element. 
