@@ -81,7 +81,7 @@ public class Gui extends JFrame{
         //creation of buttons in the application
         
         Font font1 = new Font("Courier",Font.BOLD, 15);
-        Border border = new LineBorder(Color.BLACK, 3);
+        Border border = new LineBorder(Color.BLACK, 3); 
 
         nLabels[0].setFont(font1);
         nInputs[0].setBorder(border);
